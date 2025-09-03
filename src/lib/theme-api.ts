@@ -24,6 +24,10 @@ export const THEME_PRESETS: ThemeConfig[] = [
       '--accent-foreground': '210 40% 98%',
       '--border': '214.3 31.8% 91.4%',
       '--radius': '0.75rem',
+      '--animation-speed': '0.3s',
+      '--animation-style': 'smooth',
+      '--click-effect': 'scale',
+      '--hover-intensity': 'medium',
     }
   },
   {
@@ -43,6 +47,10 @@ export const THEME_PRESETS: ThemeConfig[] = [
       '--accent-foreground': '0 0% 0%',
       '--border': '0 0% 20%',
       '--radius': '1rem',
+      '--animation-speed': '0.15s',
+      '--animation-style': 'electric',
+      '--click-effect': 'glow',
+      '--hover-intensity': 'strong',
     }
   },
   {
@@ -62,6 +70,10 @@ export const THEME_PRESETS: ThemeConfig[] = [
       '--accent-foreground': '0 0% 100%',
       '--border': '200 30% 80%',
       '--radius': '0.5rem',
+      '--animation-speed': '0.5s',
+      '--animation-style': 'gentle',
+      '--click-effect': 'ripple',
+      '--hover-intensity': 'subtle',
     }
   },
   {
@@ -81,6 +93,10 @@ export const THEME_PRESETS: ThemeConfig[] = [
       '--accent-foreground': '0 0% 100%',
       '--border': '35 40% 85%',
       '--radius': '1.25rem',
+      '--animation-speed': '0.4s',
+      '--animation-style': 'bouncy',
+      '--click-effect': 'pulse',
+      '--hover-intensity': 'medium',
     }
   },
   {
@@ -100,6 +116,10 @@ export const THEME_PRESETS: ThemeConfig[] = [
       '--accent-foreground': '0 0% 100%',
       '--border': '220 15% 88%',
       '--radius': '0.25rem',
+      '--animation-speed': '0.2s',
+      '--animation-style': 'smooth',
+      '--click-effect': 'scale',
+      '--hover-intensity': 'subtle',
     }
   }
 ];

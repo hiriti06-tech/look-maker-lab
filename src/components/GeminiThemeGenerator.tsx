@@ -51,9 +51,9 @@ export const GeminiThemeGenerator = () => {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-      const themePrompt = `Create a beautiful color theme for a website based on this description: "${prompt}". 
+      const themePrompt = `Create a beautiful color theme and animations for a website based on this description: "${prompt}". 
       
-Return ONLY a JSON object with these exact HSL values (no explanations, just the JSON):
+Return ONLY a JSON object with these exact values (no explanations, just the JSON):
 {
   "primary": "hue saturation% lightness%",
   "primaryGlow": "hue saturation% lightness%", 
@@ -66,9 +66,17 @@ Return ONLY a JSON object with these exact HSL values (no explanations, just the
   "accent": "hue saturation% lightness%",
   "accentForeground": "hue saturation% lightness%",
   "border": "hue saturation% lightness%",
-  "radius": "0.5rem"
+  "radius": "0.5rem",
+  "animationStyle": "smooth|bouncy|electric|gentle|dramatic",
+  "animationSpeed": "0.15s|0.3s|0.5s|0.8s",
+  "clickEffect": "scale|glow|pulse|shake|ripple",
+  "hoverIntensity": "subtle|medium|strong"
 }
 
+Choose animation properties that match the theme's mood. For example:
+- Cyberpunk/Neon: electric + 0.15s + glow + strong
+- Ocean/Nature: gentle + 0.5s + scale + subtle  
+- Corporate: smooth + 0.3s + scale + medium
 Make sure colors have good contrast and the theme matches the mood/feeling described.`;
 
       const result = await model.generateContent(themePrompt);
@@ -101,6 +109,10 @@ Make sure colors have good contrast and the theme matches the mood/feeling descr
           '--accent-foreground': themeData.accentForeground,
           '--border': themeData.border,
           '--radius': themeData.radius || '0.75rem',
+          '--animation-speed': themeData.animationSpeed || '0.3s',
+          '--animation-style': themeData.animationStyle || 'smooth',
+          '--click-effect': themeData.clickEffect || 'scale',
+          '--hover-intensity': themeData.hoverIntensity || 'medium',
         }
       };
 

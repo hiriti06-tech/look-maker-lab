@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dynamic-button-animations",
   {
     variants: {
       variant: {
@@ -42,6 +42,39 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
+    
+    // Get animation properties from CSS variables
+    React.useEffect(() => {
+      const updateAnimationProps = () => {
+        const root = getComputedStyle(document.documentElement);
+        const animationStyle = root.getPropertyValue('--animation-style').trim() || 'smooth';
+        const clickEffect = root.getPropertyValue('--click-effect').trim() || 'scale';
+        const hoverIntensity = root.getPropertyValue('--hover-intensity').trim() || 'medium';
+        
+        // Apply data attributes for dynamic animations
+        const buttons = document.querySelectorAll('.dynamic-button-animations');
+        buttons.forEach((button) => {
+          button.setAttribute('data-style', animationStyle);
+          button.setAttribute('data-click', clickEffect);
+          button.setAttribute('data-hover', hoverIntensity);
+        });
+      };
+      
+      updateAnimationProps();
+      
+      // Listen for theme changes
+      const observer = new MutationObserver(() => {
+        setTimeout(updateAnimationProps, 100);
+      });
+      
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['style']
+      });
+      
+      return () => observer.disconnect();
+    }, []);
+    
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}

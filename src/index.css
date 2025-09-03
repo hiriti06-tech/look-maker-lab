@@ -49,6 +49,12 @@
     --transition-theme: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     
+    /* Dynamic Animation Properties - Controlled by Gemini AI */
+    --animation-speed: 0.3s;
+    --animation-style: smooth;
+    --click-effect: scale;
+    --hover-intensity: medium;
+    
     /* Shadow system */
     --shadow-sm: 0 2px 4px hsl(var(--primary) / 0.1);
     --shadow-md: 0 4px 12px hsl(var(--primary) / 0.15);
@@ -82,7 +88,99 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+}
+
+/* Dynamic Button Animation System */
+@layer utilities {
+  /* Base button animations */
+  .dynamic-button-animations {
+    transition-duration: var(--animation-speed);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    position: relative;
+    overflow: hidden;
   }
+
+  /* Hover effects based on intensity */
+  .dynamic-button-animations:hover {
+    transform: translateY(-2px);
+  }
+
+  .dynamic-button-animations[data-hover="subtle"]:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .dynamic-button-animations[data-hover="medium"]:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--shadow-md);
+  }
+
+  .dynamic-button-animations[data-hover="strong"]:hover {
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Click effects */
+  .dynamic-button-animations:active[data-click="scale"] {
+    transform: scale(0.95);
+  }
+
+  .dynamic-button-animations:active[data-click="glow"] {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.6), var(--shadow-lg);
+    transform: scale(1.02);
+  }
+
+  .dynamic-button-animations:active[data-click="pulse"] {
+    animation: pulse-click var(--animation-speed) ease-out;
+  }
+
+  .dynamic-button-animations:active[data-click="shake"] {
+    animation: shake-click calc(var(--animation-speed) * 2) ease-in-out;
+  }
+
+  .dynamic-button-animations:active[data-click="ripple"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: hsl(var(--primary-foreground) / 0.3);
+    transform: translate(-50%, -50%);
+    animation: ripple-effect var(--animation-speed) ease-out;
+  }
+
+  /* Animation style variations */
+  .dynamic-button-animations[data-style="bouncy"] {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dynamic-button-animations[data-style="electric"] {
+    transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dynamic-button-animations[data-style="gentle"] {
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .dynamic-button-animations[data-style="dramatic"] {
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@keyframes pulse-click {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 15px hsl(var(--primary) / 0.5); }
+}
+
+@keyframes shake-click {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+@keyframes ripple-effect {
+  0% { width: 0; height: 0; opacity: 1; }
+  100% { width: 100px; height: 100px; opacity: 0; }
 }
